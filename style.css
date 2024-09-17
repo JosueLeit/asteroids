@@ -6,3 +6,43 @@ body {
   display: block;
   background-color: black;
 }
+#touchControls {
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
+  display: none;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 10;
+  flex-wrap: wrap;
+}
+
+.control-button {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 6vw;
+  width: 15vw;
+  margin: 10px;
+  height: 15vw;
+  line-height: 15vw;
+  padding: 20px;
+  border-radius: 50%;
+  text-align: center;
+  user-select: none;
+}
+
+.control-button:active {
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+@media (orientation: landscape) {
+  #touchControls {
+    flex-direction: row;
+  }
+}
+
+@media (orientation: portrait) {
+  #touchControls {
+    flex-direction: column;
+  }
+}

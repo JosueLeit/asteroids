@@ -5,6 +5,41 @@ const ctx = canvas.getContext('2d');
 let particles = [];
 let score = 0;
 let level = 0;
+let leftPressed = false;
+let rightPressed = false;
+let upPressed = false;
+let firePressed = false;
+const leftButton = document.getElementById('leftButton');
+const rightButton = document.getElementById('rightButton');
+const upButton = document.getElementById('upButton');
+const fireButton = document.getElementById('fireButton');
+document.addEventListener('touchmove', function (event) {
+    event.preventDefault();
+}, { passive: false });
+
+
+function isMobileDevice() {
+    return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+if (isMobileDevice()) {
+    document.getElementById('touchControls').style.display = 'flex';
+}
+
+leftButton.addEventListener('touchstart', () => leftPressed = true);
+leftButton.addEventListener('touchend', () => leftPressed = false);
+
+rightButton.addEventListener('touchstart', () => rightPressed = true);
+rightButton.addEventListener('touchend', () => rightPressed = false);
+
+upButton.addEventListener('touchstart', () => upPressed = true);
+upButton.addEventListener('touchend', () => upPressed = false);
+
+fireButton.addEventListener('touchstart', () => {
+    firePressed = true;
+    shootLaser();
+});
+fireButton.addEventListener('touchend', () => firePressed = false);
 
 function getHighScores() {
     let highScores = JSON.parse(localStorage.getItem('highScores'));
@@ -173,6 +208,14 @@ function update() {
 
     }
 
+    if (leftPressed) {
+        ship.rotation = -0.05;
+    } else if (rightPressed) {
+        ship.rotation = 0.05;
+    } else {
+        ship.rotation = 0;
+    }
+
 
     if (ship.thrusting) {
         ship.thrust.x += 0.1 * Math.cos(ship.angle);
@@ -182,6 +225,7 @@ function update() {
         ship.thrust.y *= 0.99;
     }
 
+    ship.thrusting = upPressed;
     ship.x += ship.thrust.x;
     ship.y += ship.thrust.y;
 
