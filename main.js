@@ -6,6 +6,8 @@ let particles = [];
 let score = 0;
 let level = 0;
 
+let isMuted = false;
+
 function getHighScores() {
     let highScores = JSON.parse(localStorage.getItem('highScores'));
     if (highScores === null) {
@@ -229,16 +231,7 @@ function update() {
             alert('Game Over!');
             let playerName = prompt('Digite seu nome:');
             saveHighScore(playerName, score);
-            score = 0;
-            level = 0;
-            ship.x = canvas.width / 2;
-            ship.y = canvas.height / 2;
-            ship.thrust.x = 0;
-            ship.thrust.y = 0;
-            ship.lasers = [];
-            ship.angle = 0;
-            createAsteroidBelt();
-
+            resetGame();
         }
     });
 
@@ -326,11 +319,37 @@ function render() {
     });
 }
 
+function resetGame() {
+    score = 0;
+    level = 0;
+    ship.x = canvas.width / 2;
+    ship.y = canvas.height /2;
+    ship.thrust.x = 0;
+    ship.thrust.y = 0;
+    ship.rotation = 0;  
+    ship.angle = 0;
+    ship.thrusting = false;
+    ship.lasers = [];
+    asteroids = [];
+    particles = [];
+    createAsteroidBelt();
+}
+
 function gameLoop() {
     update();
     render();
     requestAnimationFrame(gameLoop);
 }
 gameLoop();
+
+const muteButton = document.getElementById('muteButton');
+muteButton.addEventListener('click', () => {
+    isMuted = !isMuted;
+    muteButton.textContent = isMuted ? '🔇' : '🔊';
+    const volume = isMuted ? 0 : 1;
+    fxLaser.volume = volume;
+    fxExplode.volume = volume;
+    muteButton.blur();
+})
 
 

@@ -6,3 +6,25 @@ body {
   display: block;
   background-color: black;
 }
+
+#muteButton {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  font-size: 20px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+#muteButton: hover {
+  background-color: rgba(255, 255, 255, 0.2)
+}
+
+#muteButton:focus {
+  outline: none;
+}
